@@ -1,0 +1,136 @@
+/*! purgecss start ignore */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Mukta', sans-serif;
+    font-size: 16px;
+
+    @screen md {
+      font-family: 'Mukta', sans-serif;
+      font-size: 15px;
+    }
+  }
+
+  a,
+  button,
+  div.n-app-subnav-dropup,
+  tr.clickable {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+}
+
+@layer components {
+  .font-primary {
+    font-family: 'Mukta', sans-serif;
+  }
+
+  /* Link */
+  .text-link {
+    @apply font-medium;
+    @apply text-gray-dark;
+
+    &:hover,
+    &:focus {
+      @apply text-gray-darkest;
+      @apply border-b;
+      @apply border-dashed;
+      @apply border-gray-400;
+    }
+  }
+
+  /*
+  Heading
+  - Should set margin-bottom on each heading styles to specify its bottom spacing
+  */
+  .text-heading {
+    font-size: 1.2rem;
+    @apply font-medium;
+    @apply mb-0;
+    @apply tracking-tight;
+
+    @screen md {
+      font-size: 1.57rem;
+      @apply mb-1;
+    }
+  }
+
+  /*
+  Text
+  - Should set margin-top on each content/display
+  */
+  .text-content {
+    p {
+      @apply mt-3;
+
+      &:first-child {
+        @apply mt-0;
+      }
+    }
+  }
+
+  .input-inset-shadow {
+    -webkit-box-shadow: inset 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: inset 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+  }
+}
+
+@layer utilities {
+  .fade-enter-active {
+    transition: opacity 0.5s;
+  }
+
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .slide-fade-right-enter-active {
+    transition: all 0.8s ease;
+  }
+
+  .slide-fade-right-enter {
+    transform: translateX(-24px);
+    opacity: 0;
+  }
+
+  .slide-fade-left-enter-active {
+    transition: all 0.8s ease;
+  }
+
+  .slide-fade-left-enter {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+
+  .slide-fade-top-enter-active {
+    transition: all 1.3s ease;
+  }
+
+  .slide-fade-top-enter {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+
+  @variants responsive {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
+
+/*! purgecss end ignore */

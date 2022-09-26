@@ -1,0 +1,48 @@
+/*! purgecss start ignore */
+
+.n-table table.custom-table {
+  &.bordered {
+    & th.vgt-row-header {
+      border-bottom: 3px solid $border-color;
+    }
+    & tbody {
+      @apply divide-y-0;
+
+      & tr {
+        & td {
+          @apply relative;
+          @apply table-cell;
+          border: 1px solid $border-color;
+          border-collapse: collapse;
+
+          & > * {
+            /* @apply bg-gray-200; */
+            @apply z-30;
+          }
+        }
+
+        &.clickable {
+          background: none;
+
+          td {
+            &:hover {
+              @apply bg-secondary-semi bg-opacity-30;
+
+              --tw-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+              box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+                var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+            }
+
+            &.disable-click:hover {
+              @apply cursor-default;
+              background: none;
+              @apply shadow-none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*! purgecss end ignore */
