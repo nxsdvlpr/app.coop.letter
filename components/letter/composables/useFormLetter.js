@@ -3,16 +3,12 @@ import { assign, defaultsDeep } from 'lodash'
 import useNFormValidation from '@/composables/useNFormValidation'
 import useNFormValidators from '@/composables/useNFormValidators'
 
-export default function useFormProduct() {
-  const { required, numeric, minLength } = useNFormValidators()
+export default function useFormLetter() {
+  const { required, minLength } = useNFormValidators()
 
   const defaultData = () => ({
-    product: {
-      title: null,
-      description: null,
-      price: null,
-      isActive: true,
-      image: null,
+    letter: {
+      subject: null,
     },
   })
 
@@ -20,14 +16,10 @@ export default function useFormProduct() {
 
   const rules = computed(() => {
     return {
-      product: {
-        title: {
+      letter: {
+        subject: {
           required,
           minLengthValue: minLength(3),
-        },
-        price: {
-          numeric,
-          required,
         },
       },
     }

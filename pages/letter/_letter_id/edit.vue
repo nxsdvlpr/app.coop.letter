@@ -1,13 +1,11 @@
 <template>
   <div>
     <AppHeader>
-      <h1>{{ product.title }}</h1>
-      Product &raquo; Detail Product
+      <h1>{{ letter.title }}</h1>
+      Letter &raquo; Detail Letter
       <template slot="more">
         <NButtonGroup>
-          <NButton class="outline" @click="$router.push('/product')"
-            >&laquo; PRODUCTS</NButton
-          >
+          <NButton class="outline" @click="$router.push('/letter')">&laquo; LETTERS</NButton>
         </NButtonGroup>
       </template>
       <template slot="after">
@@ -16,7 +14,7 @@
     </AppHeader>
     <AppMain>
       <NPanel>
-        <ProductFormEdit @save="onSave" @discard="onDiscard" />
+        <LetterFormEdit @save="onSave" @discard="onDiscard" />
       </NPanel>
     </AppMain>
   </div>
@@ -32,11 +30,11 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 import { useQuery, useResult } from '@vue/apollo-composable'
-import { GET_PRODUCT } from '@/graphql/product/queries/GET_PRODUCT'
+import { GET_LETTER } from '@/graphql/letter/queries/GET_LETTER'
 
 export default defineComponent({
   meta: {
-    accessName: 'product',
+    accessName: 'letter',
   },
   setup() {
     const router = useRouter()
@@ -53,28 +51,28 @@ export default defineComponent({
     ])
 
     const onSave = () => {
-      router.push('/product')
+      router.push('/letter')
     }
 
     const onDiscard = () => {
-      router.push('/product')
+      router.push('/letter')
     }
 
     useMeta({
-      title: `Detail Product - ${env.appName}`,
+      title: `Detail Letter - ${env.appName}`,
     })
 
-    const { result } = useQuery(GET_PRODUCT, {
-      id: route.value.params.product_id,
+    const { result } = useQuery(GET_LETTER, {
+      id: route.value.params.letter_id,
     })
 
-    const product = useResult(result, {}, (data) => {
-      return data.product
+    const letter = useResult(result, {}, (data) => {
+      return data.letter
     })
 
     return {
       tabs,
-      product,
+      letter,
       onSave,
       onDiscard,
     }

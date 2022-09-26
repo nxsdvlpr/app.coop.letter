@@ -1,26 +1,23 @@
 import { gql } from 'graphql-tag'
 
-export const GET_PRODUCTS = gql`
-  query getProducts(
+export const GET_LETTERS = gql`
+  query getLetters(
     $paging: CursorPaging!
     $query: String
-    $sorting: ProductSort!
+    $sorting: LetterSort!
   ) {
-    products(
+    letters(
       paging: $paging
       filter: {
-        or: [{ title: { iLike: $query } }, { description: { iLike: $query } }]
+        or: [{ ref: { iLike: $query } }, { subject: { iLike: $query } }]
       }
       sorting: [$sorting]
     ) {
       edges {
         node {
           id
-          title
-          description
-          price
-          image
-          isActive
+          ref
+          subject
         }
       }
       totalCount
