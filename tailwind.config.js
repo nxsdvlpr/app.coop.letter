@@ -62,10 +62,10 @@ module.exports = {
           dark: '#171d29',
         },
         primary: {
-          semi: '#f59595',
-          light: '#e35151',
-          DEFAULT: '#f62121',
-          dark: '#bb1010',
+          semi: '#ccf5e0',
+          light: '#00d768',
+          DEFAULT: '#01cb63',
+          dark: '#01a550',
         },
         secondary: {
           semi: '#e0e9ff',

@@ -1,9 +1,57 @@
 <template>
   <NForm @submit="onSave">
-    <NFormSection id="overview" caption="Overview" description="Basic information letter.">
-      <NInputGroup :feedback="validation.error('letter.subject')" label="Subject">
-        <NInput v-model.trim="form.letter.subject" type="text" />
-      </NInputGroup>
+    <NFormSection
+      id="overview"
+      caption="Overview"
+      description="Basic information letter."
+    >
+      <NColumn>
+        <NInputGroup :feedback="validation.error('letter.city')" label="City">
+          <NInput v-model.trim="form.letter.city" type="text" />
+        </NInputGroup>
+
+        <NInputGroup
+          label="Published Date"
+          :feedback="validation.error('letter.publishedDate')"
+        >
+          <NDatepicker
+            v-model="form.letter.publishedDate"
+            :masks="{
+              input: 'DD MMMM YYYY',
+            }"
+          />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup
+          :feedback="validation.error('letter.destination')"
+          label="Destination"
+        >
+          <NInput v-model.trim="form.letter.destination" type="text" />
+        </NInputGroup>
+
+        <NInputGroup
+          :feedback="validation.error('letter.subject')"
+          label="Subject"
+        >
+          <NInput v-model.trim="form.letter.subject" type="text" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup label="Tags">
+          <NInputTag
+            v-model="form.tmpTag"
+            placeholder=""
+            :autocomplete-min-length="1"
+            :tags="form.tmpTags"
+            :autocomplete-items="autoCompleteTagItems"
+            :add-only-from-autocomplete="false"
+            @tags-changed="onTagsUpdate"
+          />
+        </NInputGroup>
+      </NColumn>
     </NFormSection>
 
     <NFormAction :loading="loading" @discard="onDiscard" />
@@ -12,6 +60,7 @@
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
+
 import { useMutation } from '@vue/apollo-composable'
 
 import useNTableCursorRemoteData from '@/composables/useNTableCursorRemoteData'
@@ -24,7 +73,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const { $toast } = useContext()
     const { variables } = useNTableCursorRemoteData()
-    const { form, validation } = useFormLetter()
+    const { form, validation, autoCompleteTagItems, onTagsUpdate } =
+      useFormLetter()
 
     const refetchQueries = [
       {
@@ -59,10 +109,6 @@ export default defineComponent({
       emit('discard')
     }
 
-    const onImageChanged = (file) => {
-      form.letter.image = file.url
-    }
-
     onCreateLetterDone(({ data }) => {
       $toast.success('Letter successfully added!')
       emit('save')
@@ -76,9 +122,10 @@ export default defineComponent({
       validation,
       form,
       loading,
+      autoCompleteTagItems,
       onSave,
       onDiscard,
-      onImageChanged,
+      onTagsUpdate,
     }
   },
 })

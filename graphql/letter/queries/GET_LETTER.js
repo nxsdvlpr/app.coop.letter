@@ -4,8 +4,15 @@ export const GET_LETTER = gql`
   query getLetter($id: SID!) {
     letter(id: $id) {
       id
-      ref
+      publishedDate
+      city
+      destination
       subject
+      tags {
+        id
+        label
+        slug
+      }
     }
   }
 `

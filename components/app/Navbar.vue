@@ -8,12 +8,8 @@
       </button>
       <a class="inline-flex font-bold items-center mr-4 gap-x-2" href="#">
         <div class="flex items-center text-sm md:text-md leading-none">
-          <div class="flex items-center md:hidden">
-            <div class="w-14 text-primary"><AppLogo class="h-8" /></div>
-            <NIcon icon="arrow-right-2" class="xs ml-2 mr-2 text-gray-base" />
-          </div>
           <div class="flex items-center gap-x-6 text-primary-light">
-            <div class="text-lg tracking-tight">RATA PAY</div>
+            <div class="text-lg tracking-tight">Coop Letter</div>
           </div>
         </div>
       </a>

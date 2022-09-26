@@ -17,7 +17,14 @@ export const GET_LETTERS = gql`
         node {
           id
           ref
+          publishedDate
+          city
+          destination
           subject
+          user {
+            id
+            name
+          }
         }
       }
       totalCount
