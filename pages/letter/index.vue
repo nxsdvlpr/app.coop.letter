@@ -1,16 +1,12 @@
 <template>
   <div>
     <AppHeader>
-      <h1>Product</h1>
-      <p>Product &raquo; Lists</p>
+      <h1>Letter</h1>
+      <p>Letter &raquo; Lists</p>
     </AppHeader>
     <AppMain>
       <NPanel>
-        <ProductList
-          @row-tap="onRowTap"
-          @create="onCreate"
-          @delete="onDelete"
-        />
+        <LetterList @row-tap="onRowTap" @create="onCreate" @delete="onDelete" />
       </NPanel>
     </AppMain>
   </div>
@@ -26,7 +22,7 @@ import {
 
 export default defineComponent({
   meta: {
-    accessName: 'product',
+    accessName: 'letter',
   },
   setup() {
     const router = useRouter()
@@ -34,17 +30,17 @@ export default defineComponent({
     const { env } = useContext()
 
     const onRowTap = (row) => {
-      router.push(`/product/${row.id}/edit#overview`)
+      router.push(`/letter/${row.id}/edit#overview`)
     }
 
     const onCreate = () => {
-      router.push('/product/create#overview')
+      router.push('/letter/create#overview')
     }
 
-    const onDelete = (rows) => {}
+    const onDelete = (rows) => { }
 
     useMeta({
-      title: `List Product - ${env.appName}`,
+      title: `List Letter - ${env.appName}`,
     })
 
     return {

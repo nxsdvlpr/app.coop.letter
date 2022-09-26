@@ -1,19 +1,17 @@
 <template>
   <div>
     <AppHeader>
-      <h1>Product</h1>
-      <p>Product &raquo; Create Product</p>
+      <h1>Letter</h1>
+      <p>Letter &raquo; Create Letter</p>
       <template slot="more">
         <NButtonGroup>
-          <NButton class="outline" @click="$router.push('/product')"
-            >&laquo; PRODUCTS</NButton
-          >
+          <NButton class="outline" @click="$router.push('/letter')">&laquo; LETTERS</NButton>
         </NButtonGroup>
       </template>
     </AppHeader>
     <AppMain>
       <NPanel>
-        <ProductFormCreate @save="onSave" @discard="onDiscard" />
+        <LetterFormCreate @save="onSave" @discard="onDiscard" />
       </NPanel>
     </AppMain>
   </div>
@@ -30,7 +28,7 @@ import {
 
 export default defineComponent({
   meta: {
-    accessName: 'product',
+    accessName: 'letter',
   },
   setup() {
     const router = useRouter()
@@ -45,15 +43,15 @@ export default defineComponent({
     ])
 
     const onSave = () => {
-      router.push('/product')
+      router.push('/letter')
     }
 
     const onDiscard = () => {
-      router.push('/product')
+      router.push('/letter')
     }
 
     useMeta({
-      title: `Create Product - ${env.appName}`,
+      title: `Create Letter - ${env.appName}`,
     })
 
     return {

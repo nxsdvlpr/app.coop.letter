@@ -13,13 +13,17 @@
       :class="{ '-translate-x-full md:translate-x-0': !sidebar.isOpen }"
     >
       <div
-        class="flex items-start justify-between mb-6 md:justify-center md:h-36 md:mb-0"
+        class="flex items-center justify-between h-6 mb-6 md:justify-center md:h-36 md:mb-0"
       >
         <div class="flex">
-          <div class="mt-6">
-            <AppLogo class="h-10 md:h-12 text-white" />
+          <div class="n-app-logo w-6 h-6 md:w-8 md:h-8">
+            <AppLogo class="text-white" />
+          </div>
+          <div class="ml-4 font-bold md:hidden flex items-center">
+            <span class="text-sm md:text-2xl text-white">Coop Letter</span>
           </div>
         </div>
+
         <button class="md:hidden" @click="closeSidebar">
           <NIcon icon="close" size="xs" />
         </button>

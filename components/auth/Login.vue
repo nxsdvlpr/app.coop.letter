@@ -9,7 +9,7 @@
         <div class="w-full h-24 md:h-auto md:w-1/2">
           <img
             aria-hidden="true"
-            src="~/assets/img/login-bg.webp"
+            src="~/assets/img/login-bg.jpg"
             alt="login background"
             class="object-cover w-full h-full"
           />
@@ -52,7 +52,7 @@
             </NForm>
             <div class="h-16"></div>
           </div>
-          <div class="text-xs text-gray-400">&copy; 2022 - RATA PAY</div>
+          <div class="text-xs text-gray-400">&copy; 2022 - Coop Letter</div>
         </div>
       </div>
     </div>
