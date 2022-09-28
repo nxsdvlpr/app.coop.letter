@@ -1,11 +1,13 @@
 <template>
   <div>
     <AppHeader>
-      <h1>{{ letter.title }}</h1>
+      <h1>{{ letter.ref }}</h1>
       Letter &raquo; Detail Letter
       <template slot="more">
         <NButtonGroup>
-          <NButton class="outline" @click="$router.push('/letter')">&laquo; LETTERS</NButton>
+          <NButton class="outline" @click="$router.push('/letter')"
+            >&laquo; LETTERS</NButton
+          >
         </NButtonGroup>
       </template>
       <template slot="after">
