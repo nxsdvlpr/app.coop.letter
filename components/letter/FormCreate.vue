@@ -6,6 +6,12 @@
       description="Basic information letter."
     >
       <NColumn>
+        <NInputGroup :feedback="validation.error('letter.ref')" label="Ref">
+          <NInput v-model.trim="form.letter.ref" type="text" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
         <NInputGroup :feedback="validation.error('letter.city')" label="City">
           <NInput v-model.trim="form.letter.city" type="text" />
         </NInputGroup>
@@ -25,10 +31,23 @@
 
       <NColumn>
         <NInputGroup
-          :feedback="validation.error('letter.destination')"
-          label="Destination"
+          :feedback="validation.error('letter.companyId')"
+          label="Company"
         >
-          <NInput v-model.trim="form.letter.destination" type="text" />
+          <SettingCompanySelect v-model="form.company" />
+        </NInputGroup>
+
+        <NInputGroup
+          :feedback="validation.error('letter.category')"
+          label="Category"
+        >
+          <NSelect v-model="form.category" :options="categoryOptions" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup :feedback="validation.error('letter.to')" label="To">
+          <NInput v-model.trim="form.letter.to" type="text" />
         </NInputGroup>
 
         <NInputGroup
@@ -36,6 +55,15 @@
           label="Subject"
         >
           <NInput v-model.trim="form.letter.subject" type="text" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup
+          :feedback="validation.error('letter.attachment')"
+          label="Attachment"
+        >
+          <NTextarea v-model.trim="form.letter.attachment" />
         </NInputGroup>
       </NColumn>
 
@@ -73,8 +101,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const { $toast } = useContext()
     const { variables } = useNTableCursorRemoteData()
-    const { form, validation, autoCompleteTagItems, onTagsUpdate } =
-      useFormLetter()
+    const {
+      form,
+      validation,
+      autoCompleteTagItems,
+      categoryOptions,
+      onTagsUpdate,
+    } = useFormLetter()
 
     const refetchQueries = [
       {
@@ -123,6 +156,7 @@ export default defineComponent({
       form,
       loading,
       autoCompleteTagItems,
+      categoryOptions,
       onSave,
       onDiscard,
       onTagsUpdate,

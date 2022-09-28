@@ -1,16 +1,30 @@
-import { reactive, computed, watch } from '@nuxtjs/composition-api'
+import {
+  reactive,
+  computed,
+  ref,
+  watch,
+  useContext,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import { useQuery, useResult } from '@vue/apollo-composable'
 import { assign, defaultsDeep, debounce } from 'lodash'
 import useNFormValidation from '@/composables/useNFormValidation'
 import useNFormValidators from '@/composables/useNFormValidators'
 import { useHelper } from '@/composables'
 
+import { BUILD_LETTER_REF } from '@/graphql/letter/queries/BUILD_LETTER_REF'
 import { GET_TAGS } from '@/graphql/letter/queries/GET_TAGS'
 
 export default function useFormLetter() {
   const { currentDate } = useHelper()
 
-  const { required, minLength } = useNFormValidators()
+  const route = useRoute()
+
+  const { app } = useContext()
+
+  const { required, minLength, maxLength } = useNFormValidators()
+
+  const apolloClient = app.apolloProvider.clients.defaultClient
 
   const tagVariables = reactive({
     paging: {
@@ -23,14 +37,35 @@ export default function useFormLetter() {
     },
   })
 
+  const categoryOptions = ref([
+    {
+      label: 'Internal (A)',
+      value: 'A',
+    },
+    {
+      label: 'External (B)',
+      value: 'B',
+    },
+    {
+      label: 'Foreign (F)',
+      value: 'F',
+    },
+  ])
+
   const defaultData = () => ({
     letter: {
+      ref: null,
       publishedDate: currentDate(),
       city: 'Jakarta',
-      destination: null,
+      to: null,
       subject: null,
+      attachment: null,
+      category: null,
+      companyId: null,
       tags: [],
     },
+    category: null,
+    company: null,
     tmpTag: '',
     tmpTags: [],
   })
@@ -40,14 +75,21 @@ export default function useFormLetter() {
   const rules = computed(() => {
     return {
       letter: {
+        ref: {
+          required,
+          maxLengthValue: maxLength(30),
+        },
         publishedDate: {
           required,
         },
-        destination: {
+        category: {
+          required,
+        },
+        city: {
           required,
           minLengthValue: minLength(2),
         },
-        city: {
+        to: {
           required,
           minLengthValue: minLength(2),
         },
@@ -55,7 +97,21 @@ export default function useFormLetter() {
           required,
           minLengthValue: minLength(3),
         },
+        companyId: {
+          required,
+        },
       },
+    }
+  })
+
+  const buildRefInput = computed(() => {
+    const refNo = route.value.params.letter_id ? form.letter.ref : null
+    const matched = refNo ? refNo.match(/^\w\/(\d*)\/.*/i, '$1') : null
+
+    return {
+      category: form.letter.category,
+      companyId: form.letter.companyId,
+      refNo: matched ? matched[1] : null,
     }
   })
 
@@ -87,7 +143,7 @@ export default function useFormLetter() {
     form.tmpTags = newTags
   }
 
-  const handleCustomerTag = (value) => {
+  const handleCustomerTagChange = (value) => {
     form.letter.tags = value.map((item) => ({
       id: item.value || null,
       label: item.text,
@@ -100,7 +156,33 @@ export default function useFormLetter() {
     }
   }
 
-  watch(() => form.tmpTags, handleCustomerTag, {
+  const handleCategoryChange = (value) => {
+    form.letter.category = value?.value || null
+  }
+
+  const handleCompanyChange = (value) => {
+    form.letter.companyId = value?.id || null
+  }
+
+  const buildLetterRef = async (value) => {
+    if (!value.category || !value.companyId) {
+      return
+    }
+
+    const response = await apolloClient
+      .query({
+        query: BUILD_LETTER_REF,
+        fetchPolicy: 'network-only',
+        variables: {
+          input: value,
+        },
+      })
+      .then(({ data }) => data && data)
+
+    form.letter.ref = response.buildLetterRef
+  }
+
+  watch(() => form.tmpTags, handleCustomerTagChange, {
     immediate: true,
     deep: true,
   })
@@ -110,10 +192,26 @@ export default function useFormLetter() {
     deep: true,
   })
 
+  watch(() => form.category, handleCategoryChange, {
+    immediate: true,
+    deep: true,
+  })
+
+  watch(() => form.company, handleCompanyChange, {
+    immediate: true,
+    deep: true,
+  })
+
+  watch(buildRefInput, buildLetterRef, {
+    immediate: true,
+    deep: true,
+  })
+
   return {
     form,
     validation,
     autoCompleteTagItems,
+    categoryOptions,
     onTagsUpdate,
     resetFormData,
     fillFormData,
