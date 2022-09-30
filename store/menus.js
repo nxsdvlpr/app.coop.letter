@@ -22,10 +22,15 @@ const defaultMenus = () => [
     place: 'bottom',
     accessName: 'setting',
     submenus: [
+      // {
+      //   label: 'General',
+      //   to: '/setting/general',
+      //   accessName: 'setting_general',
+      // },
       {
-        label: 'General',
-        to: '/setting/general',
-        accessName: 'setting_general',
+        label: 'Company',
+        to: '/setting/company',
+        accessName: 'setting_company',
       },
       {
         label: 'Users Management',

@@ -19,8 +19,10 @@ export const GET_LETTERS = gql`
           ref
           publishedDate
           city
-          destination
+          to
           subject
+          attachment
+          category
           user {
             id
             name

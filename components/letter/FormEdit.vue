@@ -6,6 +6,12 @@
       description="Basic information letter."
     >
       <NColumn>
+        <NInputGroup :feedback="validation.error('letter.ref')" label="Ref">
+          <NInput v-model.trim="form.letter.ref" type="text" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
         <NInputGroup :feedback="validation.error('letter.city')" label="City">
           <NInput v-model.trim="form.letter.city" type="text" />
         </NInputGroup>
@@ -25,10 +31,23 @@
 
       <NColumn>
         <NInputGroup
-          :feedback="validation.error('letter.destination')"
-          label="Destination"
+          :feedback="validation.error('letter.companyId')"
+          label="Company"
         >
-          <NInput v-model.trim="form.letter.destination" type="text" />
+          <SettingCompanySelect v-model="form.company" />
+        </NInputGroup>
+
+        <NInputGroup
+          :feedback="validation.error('letter.category')"
+          label="Category"
+        >
+          <NSelect v-model="form.category" :options="categoryOptions" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup :feedback="validation.error('letter.to')" label="To">
+          <NInput v-model.trim="form.letter.to" type="text" />
         </NInputGroup>
 
         <NInputGroup
@@ -36,6 +55,15 @@
           label="Subject"
         >
           <NInput v-model.trim="form.letter.subject" type="text" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup
+          :feedback="validation.error('letter.attachment')"
+          label="Attachment"
+        >
+          <NTextarea v-model.trim="form.letter.attachment" />
         </NInputGroup>
       </NColumn>
 
@@ -77,8 +105,13 @@ export default defineComponent({
 
     const { variables } = useNTableCursorRemoteData()
 
-    const { form, validation, autoCompleteTagItems, onTagsUpdate } =
-      useFormLetter()
+    const {
+      form,
+      validation,
+      autoCompleteTagItems,
+      categoryOptions,
+      onTagsUpdate,
+    } = useFormLetter()
 
     const refetchQueries = [
       {
@@ -111,15 +144,20 @@ export default defineComponent({
         return error({ statusCode: 404, message: 'Not Found' })
       }
 
-      const { id, __typename, ...result } = data.letter
+      const { company, id, __typename, ...result } = data.letter
 
+      form.letter = result
+
+      form.company = data.letter.company
       form.tmpTags = data.letter.tags.map((tag) => ({
         value: tag.id,
         text: tag.label,
         tiClasses: ['ti-valid'],
       }))
 
-      form.letter = result
+      form.category = categoryOptions.value.find(
+        (item) => item.value === result.category
+      )
     })
 
     const onSave = async () => {
@@ -157,6 +195,7 @@ export default defineComponent({
       form,
       loading,
       autoCompleteTagItems,
+      categoryOptions,
       onTagsUpdate,
       onSave,
       onDiscard,
