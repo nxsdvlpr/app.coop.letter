@@ -5,8 +5,13 @@
       <p>Letter &raquo; Create Letter</p>
       <template slot="more">
         <NButtonGroup>
-          <NButton class="outline" @click="$router.push('/letter')">&laquo; LETTERS</NButton>
+          <NButton class="outline" @click="$router.push('/letter')"
+            >&laquo; LETTERS</NButton
+          >
         </NButtonGroup>
+      </template>
+      <template slot="after">
+        <NTabs :tabs="tabs" />
       </template>
     </AppHeader>
     <AppMain>
@@ -37,8 +42,12 @@ export default defineComponent({
 
     const tabs = ref([
       {
-        name: 'Overview',
-        to: '#overview',
+        name: 'Meta',
+        to: '#meta',
+      },
+      {
+        name: 'Detail',
+        to: '#detail',
       },
     ])
 

@@ -47,8 +47,12 @@ export default defineComponent({
 
     const tabs = ref([
       {
-        name: 'Overview',
-        to: '#overview',
+        name: 'Meta',
+        to: '#meta',
+      },
+      {
+        name: 'Detail',
+        to: '#detail',
       },
     ])
 
