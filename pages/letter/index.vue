@@ -30,14 +30,14 @@ export default defineComponent({
     const { env } = useContext()
 
     const onRowTap = (row) => {
-      router.push(`/letter/${row.id}/edit#overview`)
+      router.push(`/letter/${row.id}/edit#meta`)
     }
 
     const onCreate = () => {
-      router.push('/letter/create#overview')
+      router.push('/letter/create#meta')
     }
 
-    const onDelete = (rows) => { }
+    const onDelete = (rows) => {}
 
     useMeta({
       title: `List Letter - ${env.appName}`,
