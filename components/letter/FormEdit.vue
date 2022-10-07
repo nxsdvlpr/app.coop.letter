@@ -1,13 +1,23 @@
 <template>
   <NForm @submit="onSave">
     <NFormSection
-      id="overview"
-      caption="Overview"
-      description="Basic information letter."
+      id="meta"
+      caption="Meta"
+      description="Meta information for letter."
     >
       <NColumn>
-        <NInputGroup :feedback="validation.error('letter.ref')" label="Ref">
-          <NInput v-model.trim="form.letter.ref" type="text" />
+        <NInputGroup
+          :feedback="validation.error('letter.companyId')"
+          label="Company"
+        >
+          <SettingCompanySelect v-model="form.company" />
+        </NInputGroup>
+
+        <NInputGroup
+          :feedback="validation.error('letter.category')"
+          label="Category"
+        >
+          <NSelect v-model="form.category" :options="categoryOptions" />
         </NInputGroup>
       </NColumn>
 
@@ -28,23 +38,13 @@
           />
         </NInputGroup>
       </NColumn>
+    </NFormSection>
 
-      <NColumn>
-        <NInputGroup
-          :feedback="validation.error('letter.companyId')"
-          label="Company"
-        >
-          <SettingCompanySelect v-model="form.company" />
-        </NInputGroup>
-
-        <NInputGroup
-          :feedback="validation.error('letter.category')"
-          label="Category"
-        >
-          <NSelect v-model="form.category" :options="categoryOptions" />
-        </NInputGroup>
-      </NColumn>
-
+    <NFormSection
+      id="detail"
+      caption="Detail"
+      description="Detail information for letter."
+    >
       <NColumn>
         <NInputGroup :feedback="validation.error('letter.to')" label="To">
           <NInput v-model.trim="form.letter.to" type="text" />
@@ -78,6 +78,12 @@
             :add-only-from-autocomplete="false"
             @tags-changed="onTagsUpdate"
           />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup :feedback="validation.error('letter.ref')" label="Ref">
+          <NInput v-model.trim="form.letter.ref" type="text" />
         </NInputGroup>
       </NColumn>
     </NFormSection>
