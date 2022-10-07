@@ -17,16 +17,11 @@ const defaultMenus = () => [
   },
   {
     label: 'Setting',
-    to: '/setting',
+    to: '/setting/company',
     icon: 'setting',
     place: 'bottom',
     accessName: 'setting',
     submenus: [
-      // {
-      //   label: 'General',
-      //   to: '/setting/general',
-      //   accessName: 'setting_general',
-      // },
       {
         label: 'Company',
         to: '/setting/company',
