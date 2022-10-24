@@ -22,10 +22,6 @@
       </NColumn>
 
       <NColumn>
-        <NInputGroup :feedback="validation.error('letter.city')" label="City">
-          <NInput v-model.trim="form.letter.city" type="text" />
-        </NInputGroup>
-
         <NInputGroup
           label="Published Date"
           :feedback="validation.error('letter.publishedDate')"
