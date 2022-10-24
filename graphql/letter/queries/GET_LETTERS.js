@@ -18,7 +18,6 @@ export const GET_LETTERS = gql`
           id
           ref
           publishedDate
-          city
           to
           subject
           attachment
@@ -26,6 +25,7 @@ export const GET_LETTERS = gql`
           user {
             id
             name
+            username
           }
         }
       }

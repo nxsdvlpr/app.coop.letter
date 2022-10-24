@@ -56,7 +56,6 @@ export default function useFormLetter() {
     letter: {
       ref: null,
       publishedDate: currentDate(),
-      city: 'Jakarta',
       to: null,
       subject: null,
       attachment: null,
@@ -84,10 +83,6 @@ export default function useFormLetter() {
         },
         category: {
           required,
-        },
-        city: {
-          required,
-          minLengthValue: minLength(2),
         },
         to: {
           required,
