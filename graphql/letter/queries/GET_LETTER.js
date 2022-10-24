@@ -7,7 +7,6 @@ export const GET_LETTER = gql`
       ref
       companyId
       publishedDate
-      city
       to
       subject
       attachment
