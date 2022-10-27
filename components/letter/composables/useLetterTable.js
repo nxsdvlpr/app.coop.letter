@@ -13,8 +13,8 @@ const useLetterTable = () => {
     width: '200px',
   }
 
-  const fromColumn = {
-    label: 'From',
+  const authorColumn = {
+    label: 'author',
     field: 'from',
     width: '150px',
   }
@@ -29,7 +29,7 @@ const useLetterTable = () => {
     field: 'to',
   }
 
-  const columns = [dateColumn, refColumn, subjectColumn, fromColumn, toColumn]
+  const columns = [dateColumn, refColumn, authorColumn, subjectColumn, toColumn]
 
   return {
     columns,
