@@ -14,8 +14,8 @@ const useLetterTable = () => {
   }
 
   const authorColumn = {
-    label: 'author',
-    field: 'from',
+    label: 'Author',
+    field: 'author',
     width: '150px',
   }
 
