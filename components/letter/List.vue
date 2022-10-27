@@ -21,10 +21,11 @@
   >
     <template #table-row="props">
       <LetterColumnRef v-if="props.column.field === 'ref'" :props="props" />
-      <LetterColumnFrom
-        v-else-if="props.column.field === 'from'"
+      <LetterColumnAuthor
+        v-else-if="props.column.field === 'author'"
         :props="props"
       />
+
       <LetterColumnAction
         v-else-if="props.column.type === 'action'"
         :props="props"
