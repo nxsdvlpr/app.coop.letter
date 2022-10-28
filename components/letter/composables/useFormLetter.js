@@ -52,6 +52,21 @@ export default function useFormLetter() {
     },
   ])
 
+  const letterTypeOptions = ref([
+    {
+      label: 'Standart',
+      value: 'STANDART',
+    },
+    {
+      label: 'Memorandum of Understanding',
+      value: 'MOU',
+    },
+    {
+      label: 'PKS',
+      value: 'PKS',
+    },
+  ])
+
   const defaultData = () => ({
     letter: {
       ref: null,
@@ -59,12 +74,21 @@ export default function useFormLetter() {
       to: null,
       subject: null,
       attachment: null,
+      type: null,
       category: null,
       companyId: null,
+      cityId: null,
+      authorId: null,
       tags: [],
     },
     category: null,
+    type: {
+      label: 'Standart',
+      value: 'STANDART',
+    },
     company: null,
+    author: null,
+    city: null,
     tmpTag: '',
     tmpTags: [],
   })
@@ -81,6 +105,9 @@ export default function useFormLetter() {
         publishedDate: {
           required,
         },
+        type: {
+          required,
+        },
         category: {
           required,
         },
@@ -91,6 +118,12 @@ export default function useFormLetter() {
         subject: {
           required,
           minLengthValue: minLength(3),
+        },
+        authorId: {
+          required,
+        },
+        cityId: {
+          required,
         },
         companyId: {
           required,
@@ -104,6 +137,7 @@ export default function useFormLetter() {
     const matched = refNo ? refNo.match(/^\w\/(\d*)\/.*/i, '$1') : null
 
     return {
+      type: form.letter.type,
       category: form.letter.category,
       companyId: form.letter.companyId,
       refNo: matched ? matched[1] : null,
@@ -155,6 +189,18 @@ export default function useFormLetter() {
     form.letter.category = value?.value || null
   }
 
+  const handleTypeChange = (value) => {
+    form.letter.type = value?.value || null
+  }
+
+  const handleAuthorChange = (value) => {
+    form.letter.authorId = value?.id || null
+  }
+
+  const handleCityChange = (value) => {
+    form.letter.cityId = value?.id || null
+  }
+
   const handleCompanyChange = (value) => {
     form.letter.companyId = value?.id || null
   }
@@ -192,6 +238,21 @@ export default function useFormLetter() {
     deep: true,
   })
 
+  watch(() => form.type, handleTypeChange, {
+    immediate: true,
+    deep: true,
+  })
+
+  watch(() => form.author, handleAuthorChange, {
+    immediate: true,
+    deep: true,
+  })
+
+  watch(() => form.city, handleCityChange, {
+    immediate: true,
+    deep: true,
+  })
+
   watch(() => form.company, handleCompanyChange, {
     immediate: true,
     deep: true,
@@ -207,6 +268,7 @@ export default function useFormLetter() {
     validation,
     autoCompleteTagItems,
     categoryOptions,
+    letterTypeOptions,
     onTagsUpdate,
     resetFormData,
     fillFormData,

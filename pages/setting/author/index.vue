@@ -1,12 +1,12 @@
 <template>
   <div>
     <AppHeader>
-      <h1>Company</h1>
-      <p>Setting &raquo; Company &raquo; Lists</p>
+      <h1>Author</h1>
+      <p>Setting &raquo; Author &raquo; Lists</p>
     </AppHeader>
     <AppMain>
       <NPanel>
-        <SettingCompanyList
+        <SettingAuthorList
           @row-tap="onRowTap"
           @create="onCreate"
           @delete="onDelete"
@@ -27,7 +27,7 @@ import {
 
 export default defineComponent({
   meta: {
-    accessName: 'setting_company',
+    accessName: 'setting_author',
   },
   setup() {
     const router = useRouter()
@@ -35,17 +35,17 @@ export default defineComponent({
     const { env } = useContext()
 
     const onRowTap = (row) => {
-      router.push(`/setting/company/${row.id}/edit`)
+      router.push(`/setting/author/${row.id}/edit`)
     }
 
     const onCreate = () => {
-      router.push('/setting/company/create')
+      router.push('/setting/author/create')
     }
 
     const onDelete = (rows) => {}
 
     useMeta({
-      title: `List Company - ${env.appName}`,
+      title: `List Author - ${env.appName}`,
     })
 
     return {
