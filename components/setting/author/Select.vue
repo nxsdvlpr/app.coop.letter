@@ -42,8 +42,8 @@ export default defineComponent({
         first: 25,
       },
       sorting: {
-        field: 'id',
-        direction: 'DESC',
+        field: 'name',
+        direction: 'ASC',
       },
     })
 
@@ -52,7 +52,9 @@ export default defineComponent({
     })
 
     const options = useResult(result, [], (data) => {
-      return data.authors.edges.map((item) => item.node)
+      const authors = data.authors.edges.map((item) => item.node)
+      emit('loaded', authors)
+      return authors
     })
 
     const onInput = (value) => {

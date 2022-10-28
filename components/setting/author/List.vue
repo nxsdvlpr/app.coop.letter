@@ -48,6 +48,12 @@ export default defineComponent({
         getQuery: GET_AUTHORS,
         destroyQuery: DESTROY_AUTHORS,
         dataProperty: 'authors',
+        customVariables: {
+          sorting: {
+            field: 'name',
+            direction: 'ASC',
+          },
+        },
       })
 
     const onCreate = () => {

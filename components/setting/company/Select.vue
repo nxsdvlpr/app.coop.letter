@@ -43,7 +43,7 @@ export default defineComponent({
       },
       sorting: {
         field: 'id',
-        direction: 'DESC',
+        direction: 'ASC',
       },
     })
 
