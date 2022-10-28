@@ -54,11 +54,11 @@ export default function useFormLetter() {
 
   const letterTypeOptions = ref([
     {
-      label: 'Standart',
-      value: 'STANDART',
+      label: 'General',
+      value: 'GEN',
     },
     {
-      label: 'Memorandum of Understanding',
+      label: 'MOU',
       value: 'MOU',
     },
     {
@@ -81,10 +81,13 @@ export default function useFormLetter() {
       authorId: null,
       tags: [],
     },
-    category: null,
+    category: {
+      label: 'External (B)',
+      value: 'B',
+    },
     type: {
-      label: 'Standart',
-      value: 'STANDART',
+      label: 'General',
+      value: 'GEN',
     },
     company: null,
     author: null,

@@ -7,40 +7,12 @@
     >
       <NColumn>
         <NInputGroup
-          :feedback="validation.error('letter.companyId')"
-          label="Company"
-        >
-          <SettingCompanySelect v-model="form.company" />
-        </NInputGroup>
-
-        <NInputGroup
-          :feedback="validation.error('letter.category')"
-          label="Category"
-        >
-          <NSelect v-model="form.category" :options="categoryOptions" />
-        </NInputGroup>
-      </NColumn>
-
-      <NColumn>
-        <NInputGroup :feedback="validation.error('letter.type')" label="Type">
-          <NSelect v-model="form.type" :options="letterTypeOptions" />
-        </NInputGroup>
-      </NColumn>
-
-      <NColumn>
-        <NInputGroup
           :feedback="validation.error('letter.authorId')"
           label="Author"
         >
-          <SettingAuthorSelect v-model="form.author" />
+          <SettingAuthorSelect v-model="form.author" @loaded="onAuthorLoaded" />
         </NInputGroup>
 
-        <NInputGroup :feedback="validation.error('letter.cityId')" label="City">
-          <SettingCitySelect v-model="form.city" />
-        </NInputGroup>
-      </NColumn>
-
-      <NColumn>
         <NInputGroup
           label="Published Date"
           :feedback="validation.error('letter.publishedDate')"
@@ -53,6 +25,36 @@
           />
         </NInputGroup>
       </NColumn>
+
+      <NColumn>
+        <NInputGroup :feedback="validation.error('letter.type')" label="Type">
+          <NSelect v-model="form.type" :options="letterTypeOptions" />
+        </NInputGroup>
+
+        <NInputGroup
+          :feedback="validation.error('letter.category')"
+          label="Category"
+        >
+          <NSelect v-model="form.category" :options="categoryOptions" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup
+          :feedback="validation.error('letter.companyId')"
+          label="Company"
+        >
+          <SettingCompanySelect v-model="form.company" />
+        </NInputGroup>
+
+        <NInputGroup :feedback="validation.error('letter.cityId')" label="City">
+          <SettingCitySelect v-model="form.city" @loaded="onCityLoaded" />
+        </NInputGroup>
+      </NColumn>
+
+      <NInputGroup :feedback="validation.error('letter.ref')" label="Ref">
+        <NInput v-model.trim="form.letter.ref" type="text" />
+      </NInputGroup>
     </NFormSection>
 
     <NFormSection
@@ -73,14 +75,12 @@
         </NInputGroup>
       </NColumn>
 
-      <NColumn>
-        <NInputGroup
-          :feedback="validation.error('letter.attachment')"
-          label="Attachment"
-        >
-          <NTextarea v-model.trim="form.letter.attachment" />
-        </NInputGroup>
-      </NColumn>
+      <NInputGroup
+        :feedback="validation.error('letter.attachment')"
+        label="Attachment"
+      >
+        <NTextarea v-model.trim="form.letter.attachment" />
+      </NInputGroup>
 
       <NColumn>
         <NInputGroup label="Tags">
@@ -95,15 +95,7 @@
           />
         </NInputGroup>
       </NColumn>
-
-      <NColumn>
-        <NInputGroup :feedback="validation.error('letter.ref')" label="Ref">
-          <NInput v-model.trim="form.letter.ref" type="text" />
-        </NInputGroup>
-      </NColumn>
     </NFormSection>
-
-    <pre>{{ form }}</pre>
 
     <NFormAction :loading="loading" @discard="onDiscard" />
   </NForm>
@@ -162,6 +154,14 @@ export default defineComponent({
       })
     }
 
+    const onCityLoaded = (cities) => {
+      form.city = cities.find((city) => city.name.match(/^jakarta/gi))
+    }
+
+    const onAuthorLoaded = (authors) => {
+      form.author = authors.find((author) => author.name.match(/^liska/gi))
+    }
+
     const onDiscard = () => {
       emit('discard')
     }
@@ -182,6 +182,8 @@ export default defineComponent({
       autoCompleteTagItems,
       categoryOptions,
       letterTypeOptions,
+      onCityLoaded,
+      onAuthorLoaded,
       onSave,
       onDiscard,
       onTagsUpdate,

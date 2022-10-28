@@ -43,7 +43,7 @@ export default defineComponent({
       },
       sorting: {
         field: 'id',
-        direction: 'DESC',
+        direction: 'ASC',
       },
     })
 
@@ -52,7 +52,9 @@ export default defineComponent({
     })
 
     const options = useResult(result, [], (data) => {
-      return data.cities.edges.map((item) => item.node)
+      const cities = data.cities.edges.map((item) => item.node)
+      emit('loaded', cities)
+      return cities
     })
 
     const onInput = (value) => {
