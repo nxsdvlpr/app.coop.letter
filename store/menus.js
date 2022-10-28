@@ -17,15 +17,25 @@ const defaultMenus = () => [
   },
   {
     label: 'Setting',
-    to: '/setting/company',
+    to: '/setting/author',
     icon: 'setting',
     place: 'bottom',
     accessName: 'setting',
     submenus: [
       {
+        label: 'Author',
+        to: '/setting/author',
+        accessName: 'setting_author',
+      },
+      {
         label: 'Company',
         to: '/setting/company',
         accessName: 'setting_company',
+      },
+      {
+        label: 'City',
+        to: '/setting/city',
+        accessName: 'setting_city',
       },
       {
         label: 'Users Management',

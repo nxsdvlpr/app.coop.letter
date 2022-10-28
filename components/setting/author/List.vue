@@ -5,7 +5,7 @@
     :is-loading.sync="loading"
     :rows="rows"
     :columns="columns"
-    :create-options="{ label: 'Add Letter' }"
+    :create-options="{ label: 'Add Author' }"
     :pagination-options="{
       enabled: true,
       perPage: 20,
@@ -20,47 +20,34 @@
     @on-delete="onDelete"
   >
     <template #table-row="props">
-      <LetterColumnRef v-if="props.column.field === 'ref'" :props="props" />
-      <LetterColumnCity
-        v-else-if="props.column.field === 'city'"
-        :props="props"
-      />
-
-      <LetterColumnAuthor
-        v-else-if="props.column.field === 'author'"
-        :props="props"
-      />
-
-      <LetterColumnAction
-        v-else-if="props.column.type === 'action'"
-        :props="props"
-        @edit-verification-data="onEditVerificationData"
-      />
-
-      <NTableCellResponsive v-else :props="props"></NTableCellResponsive>
+      <NTableCellResponsive :props="props"></NTableCellResponsive>
     </template>
   </NTable>
 </template>
 
 <script>
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import useNTableCursorRemoteData from '@/composables/useNTableCursorRemoteData'
-import { GET_LETTERS } from '@/graphql/letter/queries/GET_LETTERS'
-import { DESTROY_LETTERS } from '@/graphql/letter/mutations/DESTROY_LETTERS'
-
-import useLetterTable from '@/components/letter/composables/useLetterTable'
+import { GET_AUTHORS } from '@/graphql/setting/author/queries/GET_AUTHORS'
+import { DESTROY_AUTHORS } from '@/graphql/setting/author/mutations/DESTROY_AUTHORS'
 
 export default defineComponent({
   setup(props, { emit }) {
     const { $toast } = useContext()
 
-    const { columns } = useLetterTable()
+    const columns = ref([
+      {
+        label: 'Name',
+        field: 'name',
+        align: 'left',
+      },
+    ])
 
     const { rows, totalRecords, pageInfo, loading, methods } =
       useNTableCursorRemoteData({
-        getQuery: GET_LETTERS,
-        destroyQuery: DESTROY_LETTERS,
-        dataProperty: 'letters',
+        getQuery: GET_AUTHORS,
+        destroyQuery: DESTROY_AUTHORS,
+        dataProperty: 'authors',
       })
 
     const onCreate = () => {
@@ -72,8 +59,8 @@ export default defineComponent({
     }
 
     const onDelete = (rows) => {
-      methods.destroyItems(rows, ({ deleteManyLetters: { deletedCount } }) => {
-        $toast.success(`Letters successfully deleted!`)
+      methods.destroyItems(rows, ({ deleteManyAuthors: { deletedCount } }) => {
+        $toast.success(`Authors successfully deleted!`)
       })
       emit('delete', rows)
     }

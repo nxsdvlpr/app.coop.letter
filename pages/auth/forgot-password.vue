@@ -10,9 +10,9 @@ export default defineComponent({
   async middleware({ app, redirect }) {
     const hasToken = await !!app.$apolloHelpers.getToken()
     if (hasToken) {
-      return redirect('/dashboard')
+      return redirect('/letter')
     }
   },
-  setup() {}
+  setup() {},
 })
 </script>
