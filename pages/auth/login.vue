@@ -16,7 +16,7 @@ export default defineComponent({
   async middleware({ app, redirect }) {
     const hasToken = await !!app.$apolloHelpers.getToken()
     if (hasToken) {
-      return redirect('/dashboard')
+      return redirect('/letter')
     }
   },
   setup() {
@@ -33,7 +33,7 @@ export default defineComponent({
         return router.push(redirect)
       }
 
-      router.push('/dashboard')
+      router.push('/letter')
     }
 
     useMeta({

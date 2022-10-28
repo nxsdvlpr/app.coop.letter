@@ -21,7 +21,16 @@ export const GET_LETTERS = gql`
           to
           subject
           attachment
+          type
           category
+          author {
+            id
+            name
+          }
+          city {
+            id
+            name
+          }
           user {
             id
             name

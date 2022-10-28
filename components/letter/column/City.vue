@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.row.author">{{ props.row.author.name }}</div>
+  <div v-if="props.row.city">{{ props.row.city.name }}</div>
 </template>
 
 <script>

@@ -22,6 +22,25 @@
       </NColumn>
 
       <NColumn>
+        <NInputGroup :feedback="validation.error('letter.type')" label="Type">
+          <NSelect v-model="form.type" :options="letterTypeOptions" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup
+          :feedback="validation.error('letter.authorId')"
+          label="Author"
+        >
+          <SettingAuthorSelect v-model="form.author" />
+        </NInputGroup>
+
+        <NInputGroup :feedback="validation.error('letter.cityId')" label="City">
+          <SettingCitySelect v-model="form.city" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
         <NInputGroup
           label="Published Date"
           :feedback="validation.error('letter.publishedDate')"
@@ -84,6 +103,8 @@
       </NColumn>
     </NFormSection>
 
+    <pre>{{ form }}</pre>
+
     <NFormAction :loading="loading" @discard="onDiscard" />
   </NForm>
 </template>
@@ -112,6 +133,7 @@ export default defineComponent({
       validation,
       autoCompleteTagItems,
       categoryOptions,
+      letterTypeOptions,
       onTagsUpdate,
     } = useFormLetter()
 
@@ -146,16 +168,22 @@ export default defineComponent({
         return error({ statusCode: 404, message: 'Not Found' })
       }
 
-      const { company, id, __typename, ...result } = data.letter
+      const { company, city, author, id, __typename, ...result } = data.letter
 
       form.letter = result
 
+      form.author = data.letter.author
+      form.city = data.letter.city
       form.company = data.letter.company
       form.tmpTags = data.letter.tags.map((tag) => ({
         value: tag.id,
         text: tag.label,
         tiClasses: ['ti-valid'],
       }))
+
+      form.type = letterTypeOptions.value.find(
+        (item) => item.value === result.type
+      )
 
       form.category = categoryOptions.value.find(
         (item) => item.value === result.category
@@ -198,6 +226,7 @@ export default defineComponent({
       loading,
       autoCompleteTagItems,
       categoryOptions,
+      letterTypeOptions,
       onTagsUpdate,
       onSave,
       onDiscard,

@@ -22,6 +22,25 @@
       </NColumn>
 
       <NColumn>
+        <NInputGroup :feedback="validation.error('letter.type')" label="Type">
+          <NSelect v-model="form.type" :options="letterTypeOptions" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
+        <NInputGroup
+          :feedback="validation.error('letter.authorId')"
+          label="Author"
+        >
+          <SettingAuthorSelect v-model="form.author" />
+        </NInputGroup>
+
+        <NInputGroup :feedback="validation.error('letter.cityId')" label="City">
+          <SettingCitySelect v-model="form.city" />
+        </NInputGroup>
+      </NColumn>
+
+      <NColumn>
         <NInputGroup
           label="Published Date"
           :feedback="validation.error('letter.publishedDate')"
@@ -84,6 +103,8 @@
       </NColumn>
     </NFormSection>
 
+    <pre>{{ form }}</pre>
+
     <NFormAction :loading="loading" @discard="onDiscard" />
   </NForm>
 </template>
@@ -108,6 +129,7 @@ export default defineComponent({
       validation,
       autoCompleteTagItems,
       categoryOptions,
+      letterTypeOptions,
       onTagsUpdate,
     } = useFormLetter()
 
@@ -159,6 +181,7 @@ export default defineComponent({
       loading,
       autoCompleteTagItems,
       categoryOptions,
+      letterTypeOptions,
       onSave,
       onDiscard,
       onTagsUpdate,
